@@ -26,13 +26,14 @@ package com.auth0.android.management;
 
 
 import android.content.Context;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 
 import com.auth0.android.Auth0;
 import com.auth0.android.authentication.ParameterBuilder;
 import com.auth0.android.request.ErrorBuilder;
-import com.auth0.android.request.ParameterizableRequest;
+import com.auth0.android.request.Request;
 import com.auth0.android.request.internal.GsonProvider;
 import com.auth0.android.request.internal.ManagementErrorBuilder;
 import com.auth0.android.request.internal.OkHttpClientFactory;
@@ -161,7 +162,7 @@ public class UsersAPIClient {
      */
     @NonNull
     @SuppressWarnings("WeakerAccess")
-    public ParameterizableRequest<List<UserIdentity>, ManagementException> link(@NonNull String primaryUserId, @NonNull String secondaryToken) {
+    public Request<List<UserIdentity>, ManagementException> link(@NonNull String primaryUserId, @NonNull String secondaryToken) {
         HttpUrl url = HttpUrl.parse(auth0.getDomainUrl()).newBuilder()
                 .addPathSegment(API_PATH)
                 .addPathSegment(V2_PATH)
@@ -203,7 +204,7 @@ public class UsersAPIClient {
      */
     @NonNull
     @SuppressWarnings("WeakerAccess")
-    public ParameterizableRequest<List<UserIdentity>, ManagementException> unlink(@NonNull String primaryUserId, @NonNull String secondaryUserId, @NonNull String secondaryProvider) {
+    public Request<List<UserIdentity>, ManagementException> unlink(@NonNull String primaryUserId, @NonNull String secondaryUserId, @NonNull String secondaryProvider) {
         HttpUrl url = HttpUrl.parse(auth0.getDomainUrl()).newBuilder()
                 .addPathSegment(API_PATH)
                 .addPathSegment(V2_PATH)
@@ -241,7 +242,7 @@ public class UsersAPIClient {
      */
     @NonNull
     @SuppressWarnings("WeakerAccess")
-    public ParameterizableRequest<UserProfile, ManagementException> updateMetadata(@NonNull String userId, @NonNull Map<String, Object> userMetadata) {
+    public Request<UserProfile, ManagementException> updateMetadata(@NonNull String userId, @NonNull Map<String, Object> userMetadata) {
         HttpUrl url = HttpUrl.parse(auth0.getDomainUrl()).newBuilder()
                 .addPathSegment(API_PATH)
                 .addPathSegment(V2_PATH)
@@ -274,7 +275,7 @@ public class UsersAPIClient {
      */
     @NonNull
     @SuppressWarnings("WeakerAccess")
-    public ParameterizableRequest<UserProfile, ManagementException> getProfile(@NonNull String userId) {
+    public Request<UserProfile, ManagementException> getProfile(@NonNull String userId) {
         HttpUrl url = HttpUrl.parse(auth0.getDomainUrl()).newBuilder()
                 .addPathSegment(API_PATH)
                 .addPathSegment(V2_PATH)

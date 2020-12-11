@@ -63,8 +63,6 @@ class OAuthManager extends ResumableManager {
     private final Map<String, String> parameters;
     private final AuthenticationAPIClient apiClient;
 
-    private boolean useFullScreen;
-    private boolean useBrowser = true;
     private int requestCode;
     private PKCE pkce;
     private Long currentTimeInMillis;
@@ -80,14 +78,6 @@ class OAuthManager extends ResumableManager {
         this.apiClient = new AuthenticationAPIClient(account);
         this.ctOptions = ctOptions;
         this.headers = new HashMap<>();
-    }
-
-    void useFullScreen(boolean useFullScreen) {
-        this.useFullScreen = useFullScreen;
-    }
-
-    void useBrowser(boolean useBrowser) {
-        this.useBrowser = useBrowser;
     }
 
     @VisibleForTesting
@@ -110,11 +100,7 @@ class OAuthManager extends ResumableManager {
         Uri uri = buildAuthorizeUri();
         this.requestCode = requestCode;
 
-        if (useBrowser) {
-            AuthenticationActivity.authenticateUsingBrowser(activity, uri, ctOptions);
-        } else {
-            AuthenticationActivity.authenticateUsingWebView(activity, uri, requestCode, parameters.get(KEY_CONNECTION), useFullScreen);
-        }
+        AuthenticationActivity.authenticateUsingBrowser(activity, uri, ctOptions);
     }
 
     void setHeaders(@NonNull Map<String, String> headers) {
@@ -353,16 +339,6 @@ class OAuthManager extends ResumableManager {
     private boolean shouldUsePKCE() {
         //noinspection ConstantConditions
         return parameters.containsKey(KEY_RESPONSE_TYPE) && parameters.get(KEY_RESPONSE_TYPE).contains(RESPONSE_TYPE_CODE) && PKCE.isAvailable();
-    }
-
-    @VisibleForTesting
-    boolean useBrowser() {
-        return useBrowser;
-    }
-
-    @VisibleForTesting
-    boolean useFullScreen() {
-        return useFullScreen;
     }
 
     @VisibleForTesting

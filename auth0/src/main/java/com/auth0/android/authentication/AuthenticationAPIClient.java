@@ -87,7 +87,6 @@ public class AuthenticationAPIClient {
     private static final String ONE_TIME_PASSWORD_KEY = "otp";
     private static final String SUBJECT_TOKEN_KEY = "subject_token";
     private static final String SUBJECT_TOKEN_TYPE_KEY = "subject_token_type";
-    private static final String ACCESS_TOKEN_PATH = "access_token";
     private static final String SIGN_UP_PATH = "signup";
     private static final String DB_CONNECTIONS_PATH = "dbconnections";
     private static final String CHANGE_PASSWORD_PATH = "change_password";
@@ -269,52 +268,6 @@ public class AuthenticationAPIClient {
                 .asDictionary();
 
         return loginWithToken(parameters);
-    }
-
-    /**
-     * Log in a user with a OAuth 'access_token' of a Identity Provider like Facebook or Twitter using <a href="https://auth0.com/docs/api/authentication#social-with-provider-s-access-token">'\oauth\access_token' endpoint</a>
-     * The default scope used is 'openid'.
-     * Example usage:
-     * <pre>
-     * {@code
-     * client.loginWithOAuthAccessToken("{token}", "{connection name}")
-     *      .start(new BaseCallback<Credentials>() {
-     *          {@literal}Override
-     *          public void onSuccess(Credentials payload) { }
-     *
-     *          {@literal}Override
-     *          public void onFailure(AuthenticationException error) { }
-     *      });
-     * }
-     * </pre>
-     *
-     * @param token      obtained from the IdP
-     * @param connection that will be used to authenticate the user, e.g. 'facebook'
-     * @return a request to configure and start that will yield {@link Credentials}
-     * @deprecated The ability to exchange a third-party provider access token for Auth0 access tokens
-     * is part of the <a href="https://auth0.com/docs/api/authentication#social-with-provider-s-access-token">/oauth/access_token</a>
-     * Authentication API legacy endpoint, disabled as of June 2017. For selected social providers,
-     * there's support for a similar token exchange using the <a href="https://auth0.com/docs/api/authentication#token-exchange-for-native-social">Native Social token exchange</a>
-     * endpoint, using {@linkplain AuthenticationAPIClient#loginWithNativeSocialToken(String, String)}
-     * instead.
-     */
-    @NonNull
-    @Deprecated
-    public AuthenticationRequest loginWithOAuthAccessToken(@NonNull String token, @NonNull String connection) {
-        HttpUrl url = HttpUrl.parse(auth0.getDomainUrl()).newBuilder()
-                .addPathSegment(OAUTH_PATH)
-                .addPathSegment(ACCESS_TOKEN_PATH)
-                .build();
-
-        Map<String, Object> parameters = ParameterBuilder.newAuthenticationBuilder()
-                .setClientId(getClientId())
-                .setConnection(connection)
-                .setAccessToken(token)
-                .asDictionary();
-
-        AuthenticationRequest authRequest = factory.authenticationPOST(url, client, gson);
-        authRequest.addAuthenticationParameters(parameters);
-        return authRequest;
     }
 
     /**

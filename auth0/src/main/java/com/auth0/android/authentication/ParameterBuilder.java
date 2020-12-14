@@ -54,14 +54,12 @@ public class ParameterBuilder {
     public static final String GRANT_TYPE_REFRESH_TOKEN = "refresh_token";
     public static final String GRANT_TYPE_PASSWORD = "password";
     public static final String GRANT_TYPE_PASSWORD_REALM = "http://auth0.com/oauth/grant-type/password-realm";
-
     /**
      * @deprecated The {@code urn:ietf:params:oauth:grant-type:jwt-bearer} grant type is for use with legacy Authentication
      * APIs. This constant will be removed in version 2 of this SDK.
      */
     @Deprecated
     public static final String GRANT_TYPE_JWT = "urn:ietf:params:oauth:grant-type:jwt-bearer";
-
     public static final String GRANT_TYPE_AUTHORIZATION_CODE = "authorization_code";
     public static final String GRANT_TYPE_MFA_OTP = "http://auth0.com/oauth/grant-type/mfa-otp";
     public static final String GRANT_TYPE_PASSWORDLESS_OTP = "http://auth0.com/oauth/grant-type/passwordless/otp";
@@ -178,7 +176,6 @@ public class ParameterBuilder {
      *
      * @param device a device name
      * @return itself
-     *
      * @deprecated The {@code device} parameter is used in calls to the <a href="https://auth0.com/docs/api/authentication#database-ad-ldap-active-">/oauth/ro</a>
      * Authentication API legacy endpoint. This method will be removed in version 2 of this SDK.
      */
@@ -193,7 +190,6 @@ public class ParameterBuilder {
      *
      * @param accessToken a access token
      * @return itself
-     *
      * @deprecated This method sets the token on the request made to the <a href="https://auth0.com/docs/api/authentication#social-with-provider-s-access-token">/oauth/access_token</a>
      * Authentication API legacy endpoint, disabled as of June 2017. This method will be removed in
      * version 2 of this SDK

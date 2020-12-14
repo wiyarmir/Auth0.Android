@@ -14,7 +14,6 @@ import com.squareup.okhttp.OkHttpClient;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.auth0.android.authentication.ParameterBuilder.ACCESS_TOKEN_KEY;
 import static com.auth0.android.authentication.ParameterBuilder.AUDIENCE_KEY;
 import static com.auth0.android.authentication.ParameterBuilder.CONNECTION_KEY;
 import static com.auth0.android.authentication.ParameterBuilder.DEVICE_KEY;
@@ -115,22 +114,6 @@ class BaseAuthenticationRequest extends SimpleRequest<Credentials, Authenticatio
     @Override
     public AuthenticationRequest setAudience(@NonNull String audience) {
         addParameter(AUDIENCE_KEY, audience);
-        return this;
-    }
-
-    /**
-     * Sets the 'access_token' parameter
-     *
-     * @param accessToken a access token
-     * @return itself
-     * @deprecated This method sets the token on the request made to the <a href="https://auth0.com/docs/api/authentication#social-with-provider-s-access-token">/oauth/access_token</a>
-     * Authentication API legacy endpoint, disabled as of June 2017. This method will be removed in
-     * version 2 of this SDK
-     */
-    @NonNull
-    @Deprecated
-    public AuthenticationRequest setAccessToken(@NonNull String accessToken) {
-        addParameter(ACCESS_TOKEN_KEY, accessToken);
         return this;
     }
 

@@ -67,20 +67,6 @@ public interface AuthenticationRequest extends Request<Credentials, Authenticati
     AuthenticationRequest setAudience(@NonNull String audience);
 
     /**
-     * Sets the 'access_token' parameter
-     *
-     * @param accessToken a access token
-     * @return itself
-     *
-     * @deprecated This method sets the token on the request made to the <a href="https://auth0.com/docs/api/authentication#social-with-provider-s-access-token">/oauth/access_token</a>
-     * Authentication API legacy endpoint, disabled as of June 2017. This method will be removed in
-     * version 2 of this SDK
-     */
-    @NonNull
-    @Deprecated
-    AuthenticationRequest setAccessToken(@NonNull String accessToken);
-
-    /**
      * Add all entries of the map as parameters of this request
      *
      * @param parameters to be added to the request

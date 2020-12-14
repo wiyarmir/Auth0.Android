@@ -157,14 +157,6 @@ public class SignUpRequest implements Request<Credentials, AuthenticationExcepti
 
     @NonNull
     @Override
-    @Deprecated
-    public SignUpRequest setAccessToken(@NonNull String accessToken) {
-        authenticationRequest.setAccessToken(accessToken);
-        return this;
-    }
-
-    @NonNull
-    @Override
     public SignUpRequest setGrantType(@NonNull String grantType) {
         authenticationRequest.setGrantType(grantType);
         return this;

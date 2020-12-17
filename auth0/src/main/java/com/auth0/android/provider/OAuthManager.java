@@ -69,6 +69,7 @@ class OAuthManager extends ResumableManager {
         this.account = account;
         this.callback = callback;
         this.parameters = new HashMap<>(parameters);
+        this.parameters.put(KEY_RESPONSE_TYPE, RESPONSE_TYPE_CODE);
         this.apiClient = new AuthenticationAPIClient(account);
         this.ctOptions = ctOptions;
         this.headers = new HashMap<>();
@@ -110,7 +111,7 @@ class OAuthManager extends ResumableManager {
         try {
             PKCE.throwIfNotAvailable();
         } catch (Throwable t) {
-            callback.onFailure(new AuthenticationException("Algorithims required to use PKCE are not available on this device. Authentication can not be done securely.", t));
+            callback.onFailure(new AuthenticationException("Algorithms required to use PKCE are not available on this device. Authentication can not be done securely.", t));
             return true;
         }
 

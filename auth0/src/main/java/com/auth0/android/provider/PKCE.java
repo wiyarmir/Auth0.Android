@@ -122,7 +122,7 @@ class PKCE {
      *
      * @return if this device can use PKCE flow or not.
      */
-    public static boolean isAvailable() {
+    static boolean isAvailable() {
         return isAvailable(new AlgorithmHelper());
     }
 
@@ -133,7 +133,7 @@ class PKCE {
      *
      * @throws {@linkplain RuntimeException} if the device does not support PKCE
      */
-    public static void throwIfNotAvailable() throws IllegalStateException {
+    static void throwIfNotAvailable() throws IllegalStateException {
         checkIfAvailable(new AlgorithmHelper());
     }
 

@@ -32,11 +32,10 @@ import androidx.annotation.VisibleForTesting;
 
 import com.auth0.android.authentication.AuthenticationAPIClient;
 import com.auth0.android.authentication.AuthenticationException;
-import com.auth0.android.authentication.request.TokenRequest;
 import com.auth0.android.callback.BaseCallback;
+import com.auth0.android.request.Request;
 import com.auth0.android.result.Credentials;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -92,28 +91,26 @@ class PKCE {
      * @param callback          to notify the result of this call to.
      */
     public void getToken(String authorizationCode, @NonNull final AuthCallback callback) {
-        TokenRequest tokenRequest = apiClient.token(authorizationCode, redirectUri);
+        Request<Credentials, AuthenticationException> tokenRequest = apiClient.token(authorizationCode, codeVerifier, redirectUri);
 
         for (Map.Entry<String, String> entry : headers.entrySet()) {
             tokenRequest.addHeader(entry.getKey(), entry.getValue());
         }
 
-        tokenRequest.setCodeVerifier(codeVerifier)
-                .start(new BaseCallback<Credentials, AuthenticationException>() {
-                    @Override
-                    public void onSuccess(@Nullable Credentials payload) {
-                        //noinspection ConstantConditions
-                        callback.onSuccess(payload);
-                    }
+        tokenRequest.start(new BaseCallback<Credentials, AuthenticationException>() {
+            @Override
+            public void onSuccess(@Nullable Credentials payload) {
+                callback.onSuccess(payload);
+            }
 
-                    @Override
-                    public void onFailure(@NonNull AuthenticationException error) {
-                        if ("Unauthorized".equals(error.getDescription())) {
-                            Log.e(TAG, "Unable to complete authentication with PKCE. PKCE support can be enabled by setting Application Type to 'Native' and Token Endpoint Authentication Method to 'None' for this app at 'https://manage.auth0.com/#/applications/" + apiClient.getClientId() + "/settings'.");
-                        }
-                        callback.onFailure(error);
-                    }
-                });
+            @Override
+            public void onFailure(@NonNull AuthenticationException error) {
+                if ("Unauthorized".equals(error.getDescription())) {
+                    Log.e(TAG, "Unable to complete authentication with PKCE. PKCE support can be enabled by setting Application Type to 'Native' and Token Endpoint Authentication Method to 'None' for this app at 'https://manage.auth0.com/#/applications/" + apiClient.getClientId() + "/settings'.");
+                }
+                callback.onFailure(error);
+            }
+        });
     }
 
     /**

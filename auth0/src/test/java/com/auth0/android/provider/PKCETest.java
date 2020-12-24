@@ -125,9 +125,8 @@ public class PKCETest {
         headers.put(header1Name, header1Value);
         headers.put(header2Name, header2Value);
         PKCE pkce = new PKCE(apiClient, new AlgorithmHelperMock(CODE_VERIFIER), REDIRECT_URI, headers);
-        TokenRequest tokenRequest = mock(TokenRequest.class);
-        when(apiClient.token(AUTHORIZATION_CODE, REDIRECT_URI)).thenReturn(tokenRequest);
-        when(tokenRequest.setCodeVerifier(CODE_VERIFIER)).thenReturn(tokenRequest);
+        Request<Credentials, AuthenticationException> tokenRequest = mock(Request.class);
+        when(apiClient.token(AUTHORIZATION_CODE, CODE_VERIFIER, REDIRECT_URI)).thenReturn(tokenRequest);
         pkce.getToken(AUTHORIZATION_CODE, callback);
         verify(tokenRequest).addHeader(header1Name, header1Value);
         verify(tokenRequest).addHeader(header2Name, header2Value);
